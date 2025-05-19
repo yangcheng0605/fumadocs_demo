@@ -9,21 +9,34 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@orama/orama": "^3.1.6",
+    "@orama/stopwords": "^3.1.6",
+    "@orama/tokenizers": "^3.1.6",
+    "@radix-ui/react-dialog": "^1.1.13",
+    "@types/crypto-js": "^4.2.2",
+    "clsx": "^2.1.1",
+    "crypto-js": "^4.2.0",
+    "fumadocs-core": "^15.3.1",
+    "fumadocs-mdx": "11.6.1",
+    "fumadocs-openapi": "^8.1.1",
+    "fumadocs-ui": "^15.3.1",
     "next": "15.3.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "fumadocs-ui": "15.2.10",
-    "fumadocs-core": "15.2.10",
-    "fumadocs-mdx": "11.6.1"
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.0",
+    "shiki": "^3.3.0",
+    "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
+    "@types/mdx": "^2.0.13",
     "@types/node": "22.14.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "typescript": "^5.8.3",
-    "@types/mdx": "^2.0.13",
-    "@tailwindcss/postcss": "^4.1.4",
+    "postcss": "^8.5.3",
     "tailwindcss": "^4.1.4",
-    "postcss": "^8.5.3"
+    "typescript": "^5.8.3"
   }
 }

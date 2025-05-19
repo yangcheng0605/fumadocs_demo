@@ -1,3 +1,62 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+@source '../../node_modules/fumadocs-openapi/dist/**/*.js';
+@source '../../node_modules/fumadocs-ui/dist/**/*.js';
+:root,:host{
+  --color-fd-primary: #00a062;
+  --color-fd-accent-foreground: #00a062;
+}
+.text-fd-foreground{
+  color: var(--color-fd-primary);
+}
+.custom-docs-box{
+  width: 100%;
+}
+.custom-docs-box .prose{
+  position: sticky;
+  top: 0;
+  background-color: var(--color-fd-background);
+  z-index: 1;
+}
+.custom-docs-box .prose-header{
+  border-bottom: 1px solid #9e9e9e33;
+  padding: 8px 50px;
+}
+.custom-docs-container{
+  display: flex;
+  z-index: 0;
+}
+#nd-toc{
+  padding-top: calc(var(--spacing) * 14);
+}
+
+
+/* 
+.header-box{
+}
+.header-box .header-prose{
+  height: 90px;
+  background: #fff;
+}
+.header-box .header-prose .prose-header{
+  width: 90%;
+  margin: 0 auto;
+}
+.custom-docs-container{
+  height: calc(100vh - 90px);
+  width: 90%;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+.custom-docs-container #nd-sidebar{
+  height: 100%;
+  background: #f5f5f5;
+}
+.custom-docs-container #nd-sidebar>div{
+  border: none;
+}
+.custom-docs-container{}
+.custom-docs-container{} */
+
+

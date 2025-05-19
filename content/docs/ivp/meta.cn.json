@@ -1,0 +1,14 @@
+{
+  "title": "IVP",
+  "description": "IVP 文档",
+  "root": true,
+  "icon": "ivp",
+  "pages": [
+    "index",
+    "---Description---",
+    "apiauth",
+    "developer",
+    "---Api---",
+    "..."
+  ]
+}

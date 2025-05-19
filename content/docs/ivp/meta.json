@@ -1,0 +1,14 @@
+{
+  "title": "IVP",
+  "description": "IVP page",
+  "root": true,
+  "icon": "ivp",
+  "pages": [
+    "index",
+    "---Description---",
+    "apiauth",
+    "developer",
+    "---Api---",
+    "..."
+  ]
+}
