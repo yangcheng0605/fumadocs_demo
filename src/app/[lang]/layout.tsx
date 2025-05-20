@@ -1,6 +1,7 @@
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Translations } from 'fumadocs-ui/i18n';
 import { LanguageSwitchHandler } from '@/components/LanguageSwitchHandler';
+import React from 'react';
 import '../global.css';
 const cn: Partial<Translations> = {
   search: '搜索',
@@ -42,31 +43,27 @@ const locales = [
   },
 ];
  
-export default async function RootLayout({
+export default function LangLayout({
   params,
   children,
 }: {
   params: Promise<{ lang: string }>;
   children: React.ReactNode;
 }) {
-  const lang = (await params).lang;
+  const { lang } = React.use(params);
  
   return (
-    <html suppressHydrationWarning lang={lang}>
-      <body>
-        <RootProvider
-          i18n={{
-            locale: lang,
-            // available languages
-            locales,
-            // translations for UI
-            translations: { en, cn }[lang] || en,
-          }}
-        >
-           <LanguageSwitchHandler currentLang={lang} />
-          {children}
-        </RootProvider>
-      </body>
-    </html>
+    <RootProvider
+      i18n={{
+        locale: lang,
+        // available languages
+        locales,
+        // translations for UI
+        translations: { en, cn }[lang] || en,
+      }}
+    >
+      <LanguageSwitchHandler currentLang={lang} />
+      {children}
+    </RootProvider>
   );
 }

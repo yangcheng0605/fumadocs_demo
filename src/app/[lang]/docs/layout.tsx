@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { source } from '@/lib/source';
 // import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { DocsLayout } from "fumadocs-ui/layouts/notebook";
-import { baseOptions } from '@/app/[lang]/layout.config';
+import { baseOptions } from '@/app/layout.config';
 
 export default async function Layout({
   params,
