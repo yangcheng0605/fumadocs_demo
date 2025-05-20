@@ -22,7 +22,7 @@ export function baseOptions(locale: string): BaseLayoutProps {
         ), 
         transparentMode: 'top'
       },
-      githubUrl: 'https://github.com/nxtele/nxcloud-doc-en/wiki',
+      // githubUrl: 'https://github.com/nxtele/nxcloud-doc-en/wiki',
       links: [
         {
           text: 'NXLINK',

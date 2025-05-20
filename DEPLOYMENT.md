@@ -27,24 +27,26 @@ nvm install 18.19.0
 
 ```bash
 # 创建应用目录
-mkdir -p /var/www/fumadocs
+mkdir -p /var/www/nxdoc
 
 # 将项目文件复制到目标目录
-# 方法1：从本地上传
-scp -r /path/to/local/fumadocs/* user@your-server:/var/www/fumadocs/
+# 方法1：本地方式 将以下文件复制到服务器：
+package.json
+package-lock.json
+next.config.mjs
+public/文件夹
+.next/文件夹
 
 # 方法2：从Git仓库克隆
-cd /var/www
-git clone <your-repository-url> fumadocs
-cd fumadocs
+git clone git@e.coding.net:nxtele/ui/nxlink_docs.git nxdoc
+
 ```
 
 ### 3.2 安装依赖并构建项目
 
 ```bash
-cd /var/www/fumadocs
 
-# 安装依赖
+# 进入项目根目录 安装依赖
 npm ci  # 使用package-lock.json的确切版本安装
 
 # 构建项目
@@ -105,19 +107,16 @@ server {
 }
 ```
 
-### 重启服务
-
+## 6. 启动
 ```bash
-# 重启应用
-pm2 restart fumadocs
+#方式1: 修改项目package脚本
+npm run start
 
-# 重启Nginx
-sudo systemctl restart nginx
+#方式2: pm2直接启动
+pm2 start npm --name \"nx-doc\" -- start
 ```
 
-## 9. 性能优化建议
+## 7. 性能优化建议
 
-1. 启用Nginx缓存：在Nginx配置中添加适当的缓存指令
-2. 使用CDN：考虑将静态资源部署到CDN
-3. 监控内存使用：使用`pm2 monit`监控应用内存使用情况
-4. 定期清理：定期清理`.next/cache`目录以释放磁盘空间 
+1. 监控内存使用：使用`pm2 monit`监控应用内存使用情况
+2. 定期清理：定期清理`.next/cache`目录以释放磁盘空间 
