@@ -6,6 +6,7 @@
     "build": "next build",
     "dev": "next dev --turbo",
     "start": "next start",
+    "start:ppe": "pm2 start npm --name \"nx-doc\" -- start",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {

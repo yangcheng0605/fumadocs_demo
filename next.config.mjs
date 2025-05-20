@@ -7,6 +7,7 @@ const config = {
   reactStrictMode: true,
   allowedDevOrigins: ['*'],
   devIndicators: false,
+  // output: 'export', 
 };
 
 export default withMDX(config);

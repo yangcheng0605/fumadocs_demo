@@ -260,7 +260,6 @@ export const DELETE = proxyHandler;
 export const PATCH = proxyHandler;
 export const HEAD = proxyHandler;
 export const OPTIONS = async (req: NextRequest) => {
-  console.log('收到OPTIONS请求');
   return new Response(null, {
     status: 204,
     headers: {

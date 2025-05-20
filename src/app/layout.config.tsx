@@ -20,15 +20,14 @@ export function baseOptions(locale: string): BaseLayoutProps {
             {/* <span className="text-sm text-gray-500">v0.0.1</span> */}
           </>
         ), 
-        transparentMode: 'top',
+        transparentMode: 'top'
       },
-      // githubUrl: 'https://github.com/nxtele/nxcloud-doc-en/wiki',
+      githubUrl: 'https://github.com/nxtele/nxcloud-doc-en/wiki',
       links: [
         {
           text: 'NXLINK',
           url: 'https://nxlink.nxcloud.com',
           // secondary items will be displayed differently on navbar
-          secondary: false,
         },
       ],
   }

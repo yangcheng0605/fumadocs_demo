@@ -5,9 +5,7 @@
   "icon": "ivp",
   "pages": [
     "index",
-    "---Description---",
     "apiauth",
-    "developer",
     "---Api---",
     "..."
   ]

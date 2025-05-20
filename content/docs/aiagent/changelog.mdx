@@ -1,0 +1,120 @@
+---
+title: Changelog
+description: Record of all notable changes to the AI Agent API
+---
+
+# Changelog
+
+Below is a chronological list of changes made to the AI Agent API, with the most recent changes at the top.
+
+<Timeline items={[
+  {
+    date: "2025-01-15",
+    version: "2.3.0",
+    title: "Response Streaming Support",
+    content: (
+      <>
+        <p>Added streaming response capability for real-time AI responses:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>New streaming parameter in API requests</li>
+          <li>Server-sent events (SSE) support</li>
+          <li>Improved response time for large outputs</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-12-10",
+    version: "2.2.5",
+    title: "Performance Optimization and Bug Fixes",
+    content: (
+      <>
+        <p>Several performance improvements and bug fixes:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>Reduced latency by 30% for complex queries</li>
+          <li>Fixed token count calculation for multi-byte characters</li>
+          <li>Improved error handling for rate-limited requests</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-11-01",
+    version: "2.2.0",
+    title: "New GPT-5 Model Support",
+    content: (
+      <>
+        <p>Added support for the latest GPT-5 model:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>Higher accuracy for complex reasoning tasks</li>
+          <li>Better context understanding with 32k token limit</li>
+          <li>New parameter: <code>model=nxai-gpt5</code></li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-09-15",
+    version: "2.1.0",
+    title: "Multi-file Document Processing",
+    content: (
+      <>
+        <p>Enhanced document processing capabilities:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>Added support for batched document analysis</li>
+          <li>New endpoint: <code>/v1/aiagent/documents/batch</code></li>
+          <li>Improved document comparison features</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-07-20",
+    version: "2.0.0",
+    title: "Major API Redesign",
+    content: (
+      <>
+        <p>Complete API redesign with breaking changes:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>New authentication flow with enhanced security</li>
+          <li>Restructured response formats for better consistency</li>
+          <li>Deprecated legacy endpoints (v0.x)</li>
+          <li>Added comprehensive request validation</li>
+        </ul>
+        <p className="mt-2 font-medium text-amber-600 dark:text-amber-400">Migration guide available in the developer documentation.</p>
+      </>
+    )
+  },
+  {
+    date: "2024-05-10",
+    version: "1.8.5",
+    title: "Advanced Feature Extraction",
+    content: (
+      <>
+        <p>Improved feature extraction capabilities:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>Added named entity recognition</li>
+          <li>Enhanced sentiment analysis with emotion detection</li>
+          <li>New summarization options with adjustable length</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-03-01",
+    version: "1.8.0",
+    title: "Initial Public Release",
+    content: (
+      <>
+        <p>First public release of the AI Agent API with the following features:</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>Text completion and generation</li>
+          <li>Question answering</li>
+          <li>Text classification</li>
+          <li>Document analysis</li>
+          <li>Basic content moderation</li>
+        </ul>
+      </>
+    )
+  }
+]} /> 

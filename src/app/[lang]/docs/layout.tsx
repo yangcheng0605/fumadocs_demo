@@ -3,7 +3,7 @@ import { source } from '@/lib/source';
 // import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import { baseOptions } from '@/app/layout.config';
-
+import * as Base from 'fumadocs-core/sidebar';
 export default async function Layout({
   params,
   children,
@@ -51,6 +51,7 @@ export default async function Layout({
               };
             },
           },
+          // collapsible: false, // 折叠按钮显示隐藏
         }}
       >
         {children}

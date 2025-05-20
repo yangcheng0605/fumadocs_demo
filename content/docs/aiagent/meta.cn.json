@@ -1,14 +1,13 @@
-
 {
   "title": "AI Agent",
   "description": "AI Agent 文档",
   "root": true,
   "icon": "aiagent",
+  "defaultOpen": true,
   "pages": [
     "index",
-    "---Description---",
     "apiauth",
-    "developer",
+    "changelog",
     "---Api---",
     "..."
   ]

@@ -1,0 +1,118 @@
+---
+title: 变更日志
+description: ''
+---
+
+以下是 AI Agent API 的所有重要变更记录时间线，最新的变更显示在顶部。
+
+<Timeline items={[
+  {
+    date: "2025-01-15",
+    version: "2.3.0",
+    title: "响应流式处理支持",
+    content: (
+      <>
+        <p>添加了流式响应功能，支持实时AI回复：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>API请求中新增流式处理参数</li>
+          <li>支持服务器发送事件(SSE)</li>
+          <li>优化了大型输出的响应时间</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-12-10",
+    version: "2.2.5",
+    title: "性能优化和问题修复",
+    content: (
+      <>
+        <p>多项性能改进和错误修复：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>复杂查询的延迟降低了30%</li>
+          <li>修复了多字节字符的token计数问题</li>
+          <li>改进了速率限制请求的错误处理</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-11-01",
+    version: "2.2.0",
+    title: "新增GPT-5模型支持",
+    content: (
+      <>
+        <p>添加了对最新GPT-5模型的支持：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>复杂推理任务的准确率更高</li>
+          <li>更好的上下文理解能力，支持32k token限制</li>
+          <li>新参数：<code>model=nxai-gpt5</code></li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-09-15",
+    version: "2.1.0",
+    title: "多文件文档处理",
+    content: (
+      <>
+        <p>增强了文档处理能力：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>新增批量文档分析支持</li>
+          <li>新端点：<code>/v1/aiagent/documents/batch</code></li>
+          <li>改进了文档比较功能</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-07-20",
+    version: "2.0.0",
+    title: "API重大改版",
+    content: (
+      <>
+        <p>完整的API重新设计，包含破坏性变更：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>增强安全性的新认证流程</li>
+          <li>重构响应格式，提高一致性</li>
+          <li>弃用旧版端点(v0.x)</li>
+          <li>增加全面的请求验证</li>
+        </ul>
+        <p className="mt-2 font-medium text-amber-600 dark:text-amber-400">迁移指南可在开发者文档中查阅。</p>
+      </>
+    )
+  },
+  {
+    date: "2024-05-10",
+    version: "1.8.5",
+    title: "高级特征提取",
+    content: (
+      <>
+        <p>改进了特征提取能力：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>添加了命名实体识别</li>
+          <li>增强了情感分析，支持情绪检测</li>
+          <li>新增可调节长度的摘要选项</li>
+        </ul>
+      </>
+    )
+  },
+  {
+    date: "2024-03-01",
+    version: "1.8.0",
+    title: "首次公开发布",
+    content: (
+      <>
+        <p>AI Agent API的首次公开发布，包含以下功能：</p>
+        <ul className="list-disc pl-6 space-y-1 mt-2">
+          <li>文本补全和生成</li>
+          <li>问答功能</li>
+          <li>文本分类</li>
+          <li>文档分析</li>
+          <li>基础内容审核</li>
+        </ul>
+      </>
+    )
+  }
+]} /> 
