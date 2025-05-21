@@ -32,11 +32,6 @@ function calcSign(headers: {[key: string]: string}, body: string | null): string
  * 自定义代理实现，增加详细的日志输出
  */
 async function proxyHandler(req: NextRequest): Promise<Response> {
-  // 添加调试信息
-  console.log('Node.js版本:', process.version);
-  console.log('当前工作目录:', process.cwd());
-  console.log('环境变量:', process.env.NODE_ENV);
-  
   const url = req.nextUrl.searchParams.get('url');
   console.log(`代理请求URL: ${url}`);
   if (!url) {
@@ -44,29 +39,16 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
     return Response.json('缺少URL查询参数', { status: 400 });
   }
 
-  // 定义不应转发的hop-by-hop头部
-  const hopByHopHeaders = [
-    'connection', 
-    'keep-alive', 
-    'transfer-encoding', 
-    'te', 
-    'trailer', 
-    'upgrade', 
-    'proxy-authorization', 
-    'proxy-authenticate'
-  ];
-
-  // 使用普通对象存储请求头，而不是Headers对象
+  // 克隆请求头并记录
+  const headers = new Headers();
   const headerObj: {[key: string]: string} = {};
+  // console.log('请求头:');
   req.headers.forEach((value, key) => {
     const lowerKey = key.toLowerCase();
-    // 过滤掉host,origin和所有hop-by-hop头部
-    if (lowerKey !== 'host' && 
-        lowerKey !== 'origin' && 
-        !hopByHopHeaders.includes(lowerKey)) {
+    if (lowerKey !== 'host' && lowerKey !== 'origin') {
+      headers.set(key, value);
       headerObj[key] = value;
-    } else {
-      console.log(`跳过头部: ${key}`);
+      // console.log(`  ${key}: ${value}`);
     }
   });
 
@@ -115,6 +97,7 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
     if (!lowerCaseHeaderObj.ts) {
       const ts = Date.now().toString();
       headerObj.ts = ts;
+      headers.set('ts', ts);
       lowerCaseHeaderObj.ts = ts;
       console.log(`添加时间戳: ${ts}`);
     }
@@ -140,7 +123,7 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
         // 计算签名
         const sign = calcSign(signParams, requestBody);
         // 添加签名到请求头
-        headerObj.sign = sign;
+        headers.set('sign', sign);
         console.log(`使用请求头的密钥计算签名: sign=${sign}`);
       } else {
         console.log(`请求头中未提供accessSecret，跳过签名计算`);
@@ -151,14 +134,13 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
 
     // 添加更多请求调试信息
     console.log(`正在发送${req.method}请求到: ${targetUrl}`);
-    console.log(`请求头数量: ${Object.keys(headerObj).length}`);
+    console.log(`请求头数量: ${Array.from(headers.keys()).length}`);
     console.log(`请求体长度: ${requestBody ? requestBody.length : 0}`);
-    console.log('请求头详情:', headerObj);
 
     // 发送请求到目标API，但禁用重定向跟随，以便捕获301等状态码
     const fetchOptions: RequestInit = {
       method: req.method,
-      headers: headerObj, // 直接使用对象作为headers
+      headers,
       body: requestBody,
       redirect: 'manual', // 手动处理重定向
       cache: 'no-store' as RequestCache
@@ -169,16 +151,16 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
     const response = await fetch(targetUrl, fetchOptions);
 
     // 记录响应信息
-    console.log(`响应状态: ${response.status} ${response.statusText}`);
-    
-    // 使用普通对象处理响应头
-    const responseHeaders: Record<string, string> = {};
+    // console.log(`响应状态: ${response.status} ${response.statusText}`);
+    // console.log('响应头:');
+    const responseHeaders = new Headers();
     response.headers.forEach((value, key) => {
+      // console.log(`  ${key}: ${value}`);
+      // 排除CORS头和content-encoding头 (内容编码会导致浏览器解码失败)
       const lowerKey = key.toLowerCase();
       if (!lowerKey.startsWith('access-control-') && 
-          lowerKey !== 'content-encoding' &&
-          !hopByHopHeaders.includes(lowerKey)) {
-        responseHeaders[key] = value;
+          lowerKey !== 'content-encoding') {
+        responseHeaders.set(key, value);
       }
     });
 
@@ -189,25 +171,24 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
       // 不对gzip压缩的内容进行解码，直接传递原始响应
       if (response.headers.get('content-encoding') === 'gzip') {
         console.log('检测到gzip编码，使用原始响应体');
-        
+        const newHeaders = new Headers(responseHeaders);
         // 设置CORS头
-        const finalHeaders = new Headers(responseHeaders);
-        finalHeaders.set('Access-Control-Allow-Origin', '*');
-        finalHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        finalHeaders.set('Access-Control-Allow-Headers', '*');
+        newHeaders.set('Access-Control-Allow-Origin', '*');
+        newHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        newHeaders.set('Access-Control-Allow-Headers', '*');
         
         return new Response(response.body, {
           status: response.status,
           statusText: response.statusText,
-          headers: finalHeaders
+          headers: newHeaders
         });
       }
 
       // 其他情况下尝试读取响应文本
       responseBody = await responseClone.text();
-      console.log(`响应体预览: ${responseBody.substring(0, 300)}...`);
+      // console.log(`响应体: ${responseBody}`);
     } catch (error) {
-      console.log('无法读取响应体:', error);
+      // console.log('无法读取响应体:', error);
       responseBody = '';
     }
 
@@ -215,6 +196,9 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
     if (response.status >= 300 && response.status < 400) {
       const location = response.headers.get('location');
       console.log(`*** 收到重定向(${response.status}): ${location} ***`);
+      
+      // 你可以选择自动跟随重定向
+      // 但这里我们只记录，不自动跟随，以便前端看到真实的错误
     }
 
     // 如果状态码表示错误，记录更详细的信息
@@ -223,19 +207,16 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
       console.log(`详细错误信息: ${responseBody}`);
     }
 
-    // 创建最终响应头
-    const finalHeaders = new Headers(responseHeaders);
-    
     // 设置CORS头
-    finalHeaders.set('Access-Control-Allow-Origin', '*');
-    finalHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    finalHeaders.set('Access-Control-Allow-Headers', '*');
+    responseHeaders.set('Access-Control-Allow-Origin', '*');
+    responseHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    responseHeaders.set('Access-Control-Allow-Headers', '*');
 
     // 返回响应，包括错误状态码
     return new Response(responseBody, {
       status: response.status,
       statusText: response.statusText,
-      headers: finalHeaders
+      headers: responseHeaders
     });
   } catch (error: any) {
     console.error('代理请求失败:', error);
@@ -243,14 +224,6 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
     // 详细记录错误信息
     console.error('错误类型:', error.constructor.name);
     console.error('错误消息:', error.message);
-    console.error('详细错误:', JSON.stringify({
-      message: error.message,
-      name: error.name,
-      code: error.code,
-      cause: error.cause,
-      stack: error.stack
-    }, null, 2));
-    
     if (error.cause) {
       console.error('错误原因:', error.cause);
       console.error('错误代码:', error.cause.code);
@@ -265,6 +238,9 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
         });
       }
     }
+    if (error.stack) {
+      console.error('错误堆栈:', error.stack);
+    }
 
     return Response.json(
       { 
@@ -277,7 +253,6 @@ async function proxyHandler(req: NextRequest): Promise<Response> {
   }
 }
 
-// 处理各种HTTP方法
 export const GET = proxyHandler;
 export const POST = proxyHandler;
 export const PUT = proxyHandler;
@@ -292,6 +267,6 @@ export const OPTIONS = async (req: NextRequest) => {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Max-Age': '86400',
-    },
+    }
   });
 }; 

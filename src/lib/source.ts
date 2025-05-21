@@ -20,7 +20,6 @@ export const source = loader({
     attachFile,
   },
 });
-// openai fetch
 export const openapi = createOpenAPI({
   proxyUrl: '/api/proxy',
 });
