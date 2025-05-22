@@ -4,9 +4,10 @@ info:
   description: ''
   version: 1.0.0
 tags:
-  - name: task
-  - name: call
-  - name: order
+  - name: task-list
+  - name: call-list
+  - name: order-delete
+  - name: call-append
 paths:
   /openapi/aiagent/task/list:
     post:
@@ -14,7 +15,7 @@ paths:
       deprecated: false
       description: ''
       tags:
-        - task
+        - task-list
       parameters:
         - name: accessKey
           in: header
@@ -100,7 +101,7 @@ paths:
       deprecated: false
       description: ''
       tags:
-        - call
+        - call-list
       parameters:
         - name: accessKey
           in: header
@@ -178,7 +179,7 @@ paths:
       deprecated: false
       description: ''
       tags:
-        - order
+        - order-delete
       parameters:
         - name: accessKey
           in: header
@@ -240,7 +241,7 @@ paths:
       deprecated: false
       description: ''
       tags:
-        - call
+        - call-append
       parameters:
         - name: accessKey
           in: header
