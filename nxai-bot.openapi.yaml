@@ -4,18 +4,18 @@ info:
   description: ''
   version: 1.0.0
 tags:
-  - name: mgr
-  - name: mgr/对外api外呼任务管理
-  - name: Call List
+  - name: task-list
+  - name: call-list
+  - name: order-delete
+  - name: call-append
 paths:
-  /openapi/aiagent/call/list:
+  /openapi/aiagent/task/list:
     post:
-      summary: 对外api 通话记录
+      summary: 对外api 任务
       deprecated: false
       description: ''
       tags:
-        - mgr/对外api外呼任务管理
-        - Call List
+        - task-list
       parameters:
         - name: accessKey
           in: header
@@ -24,11 +24,90 @@ paths:
           example: 'AK-1961228596103496364-4784'
           schema:
             type: string
+        - name: bizType
+          in: header
+          description: ''
+          required: true
+          example: '100'
+          schema:
+            type: string
+        - name: action
+          in: header
+          description: ''
+          required: false
+          example: 'nxai'
+          schema:
+            type: string
         - name: accessSecret
           in: header
-          description: '此参数仅文档中测试使用，实际使用时请在签名中使用'
-          required: true
+          description: ''
+          required: false
           example: 'a5824077337e44f9b629d9c8276e643d'
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                createStartTs:
+                  type: integer
+                createEndTs:
+                  type: integer
+                minCallsAnsweredRate:
+                  type: string
+                maxCallsAnsweredRate:
+                  type: string
+                minTaskTotalQuantity:
+                  type: string
+                maxTaskTotalQuantity:
+                  type: string
+                pageNumber:
+                  type: integer
+                pageSize:
+                  type: integer
+              required:
+                - createStartTs
+                - createEndTs
+                - minCallsAnsweredRate
+                - maxCallsAnsweredRate
+                - minTaskTotalQuantity
+                - maxTaskTotalQuantity
+                - pageNumber
+                - pageSize
+            example:
+              createStartTs: 1744041600
+              createEndTs: 1746719999
+              minCallsAnsweredRate: '10'
+              maxCallsAnsweredRate: '100'
+              minTaskTotalQuantity: '6'
+              maxTaskTotalQuantity: '100'
+              pageNumber: 1
+              pageSize: 10
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /openapi/aiagent/call/list:
+    post:
+      summary: 对外api 通话记录
+      deprecated: false
+      description: ''
+      tags:
+        - call-list
+      parameters:
+        - name: accessKey
+          in: header
+          description: ''
+          required: true
+          example: 'AK-1961228596103496364-4784'
           schema:
             type: string
         - name: bizType
@@ -43,6 +122,13 @@ paths:
           description: ''
           required: true
           example: 'nxai'
+          schema:
+            type: string
+        - name: accessSecret
+          in: header
+          description: ''
+          required: false
+          example: 'a5824077337e44f9b629d9c8276e643d'
           schema:
             type: string
       requestBody:
@@ -87,10 +173,162 @@ paths:
                 properties: {}
           headers: {}
       security: []
+  /openapi/aiagent/order/delete:
+    post:
+      summary: 对外api 删除拨打
+      deprecated: false
+      description: ''
+      tags:
+        - order-delete
+      parameters:
+        - name: accessKey
+          in: header
+          description: ''
+          required: true
+          example: 'AK-1961228596103496364-4784'
+          schema:
+            type: string
+        - name: bizType
+          in: header
+          description: ''
+          required: true
+          example: '100'
+          schema:
+            type: string
+        - name: action
+          in: header
+          description: ''
+          required: true
+          example: 'nxai'
+          schema:
+            type: string
+        - name: accessSecret
+          in: header
+          description: ''
+          required: false
+          example: 'a5824077337e44f9b629d9c8276e643d'
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  type: string
+                taskId:
+                  type: string
+              required:
+                - contactId
+                - taskId
+            example:
+              contactId: 52145b00-abc9-4a87-94c2-ed1e1e42xki093
+              taskId: 7ba86c5b-6dee-4860-90ef-7dbdc9e7d8ad
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /openapi/aiagent/call/append:
+    post:
+      summary: 对外api 追加号码
+      deprecated: false
+      description: ''
+      tags:
+        - call-append
+      parameters:
+        - name: accessKey
+          in: header
+          description: ''
+          required: true
+          example: 'AK-1961228596103496364-4784'
+          schema:
+            type: string
+        - name: bizType
+          in: header
+          description: ''
+          required: true
+          example: '100'
+          schema:
+            type: string
+        - name: action
+          in: header
+          description: ''
+          required: true
+          example: 'nxai'
+          schema:
+            type: string
+        - name: accessSecret
+          in: header
+          description: ''
+          required: false
+          example: 'a5824077337e44f9b629d9c8276e643d'
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taskId:
+                  type: string
+                countryCode:
+                  type: string
+                list:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      contactId:
+                        type: string
+                      name:
+                        type: string
+                      phoneNumber:
+                        type: string
+                      params:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            value:
+                              type: string
+              required:
+                - taskId
+                - countryCode
+                - list
+            example:
+              taskId: fef8aa2a-38b2-4b70-b381-9345c5048877
+              countryCode: '86'
+              list:
+                - contactId: 52145b00-abc9-4a87-94c2-ed1e1e42xki0933789et
+                  name: name1
+                  phoneNumber: '13025689204'
+                  params:
+                    - name: key1
+                      value: value1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
 components:
   schemas: {}
   securitySchemes: {}
 servers:
   - url: https://test-api-westus.nxlink.ai
-    description: '对外测试环境 '
+    description: '对外api测试环境 '
 security: []

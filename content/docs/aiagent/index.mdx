@@ -1,51 +1,19 @@
 ---
-title: API Introduction
-description: "Developer resources for NXCLOUD API integration测试测试搜索中文"
+title: API Overview Introduction
+description: Welcome to the NXLINK API documentation. This guide will help you integrate and use our API services.
 ---
+import { DynamicLink } from 'fumadocs-core/dynamic-link';
+import { I18nCard } from '@/components/mdxCom/I18nCard';
 
-# Developer Resources
+## Getting Started
 
-## API Documentation
+Before using the API, please familiarize yourself with our authentication mechanism:
 
-Access our comprehensive API documentation to integrate NXCLOUD communication services into your applications:
+<Cards>
+  <I18nCard title="API Authentication Guide" href="/docs/aiagent/apiauth" />
+  <I18nCard title="API Reference" href="/docs/aiagent/api/index" />
+</Cards>
 
-## Available Services
+## Important Notice
 
-### Communication
-
-- **Message**
-  - SMS OTP: One-time password via SMS
-  - Marketing SMS: Promote to your customers
-  - SMS Notification: Update your customers
-  - Email OTP: One-time password via Email
-
-- **Voice**
-  - Voice OTP: One-time password via call
-  - Voice Notification: Voice-recorded call update
-  - SIP Trunk: Converse via IP call
-
-- **Conversation**
-  - Super Messaging: Integrate once for all channels
-  - WhatsApp Business
-  - Viber Business
-  - Zalo Business
-
-### Application Services
-
-- **Fraud Prevention**
-  - Fraud Protector: Real-time fraud protection
-  - OTA: One-tap silent authentication
-  - Number Check: Targeting wanted consumers
-
-- **Global Number**
-  - Privacy Number: Privacy via masked numbers
-  - SMS A2P, P2A: 2-way SMS via local numbers
-
-- **Customer Engagement**
-  - NXLink: Effective web-based and sales engagement with AI-voice capabilities
-
-## Get Started
-
-Ready to implement our solutions? [Sign up](/sign-up) for a developer account to begin integrating our communication services.
-
-For technical assistance, please contact our developer support team at [info@nxcloud.com](mailto:info@nxcloud.com).
+All API requests require signature authentication. Please make sure you have read and understood the <DynamicLink href="/[lang]/docs/aiagent/apiauth">API Authentication Guide</DynamicLink> to construct your requests correctly. 
