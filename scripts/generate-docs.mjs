@@ -5,6 +5,5 @@ void generateFiles({
   output: './content/docs/aiagent',
   includeDescription: true,
   per: 'tag',
-  // groupBy: 'tag',
 });
 
